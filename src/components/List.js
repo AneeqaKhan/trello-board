@@ -3,8 +3,13 @@ import "./app.css";
 import Card from "./Card";
 import ActionButton from "./ActionButton";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import Icon from "@material-ui/core/Icon";
+import { deleteList } from "../actions";
 
-const List = ({ title, cards, listID, index }) => {
+const List = ({ title, cards = [], listID, index, dispatch }) => {
+  const handleDeleteList = () => {
+    dispatch(deleteList(listID));
+  };
   return (
     <Draggable draggableId={String(listID)} index={index}>
       {provided => (
@@ -17,13 +22,20 @@ const List = ({ title, cards, listID, index }) => {
           <Droppable droppableId={String(listID)}>
             {provided => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
-                <h4>{title}</h4>
+                <div className="list-title-wrapper">
+                  <h4>{title}</h4>
+                  <div className="list-delete-button-container" onClick={handleDeleteList}>
+                    <Icon>delete</Icon>
+                  </div>
+                </div>
                 {cards.map((card, index) => (
                   <Card
+                    listId={listID}
                     key={card.id}
                     index={index}
                     text={card.text}
-                    id={card.id}
+                    cardId={card.id}
+                    dispatch={dispatch}
                   />
                 ))}
                 <ActionButton listID={listID} />

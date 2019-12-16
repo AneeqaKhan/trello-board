@@ -14,7 +14,25 @@
   height: 100%;
 }
 
+.list-title-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list-delete-button-container {
+  opacity: 0.5;
+  color: inherit;
+  width: 20px;
+  cursor: pointer;
+}
+
 .card-conatiner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   background-color: white;
   border-radius: 3px;
   padding: 8px;

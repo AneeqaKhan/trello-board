@@ -67,7 +67,7 @@ const listsReducer = (state = initialState, action) => {
       });
       return newState;
     }
-    case CONSTANTS.DRAG_HAPPENED:
+    case CONSTANTS.DRAG_HAPPENED: {
       const {
         droppableIdStart,
         droppableIdEnd,
@@ -89,7 +89,6 @@ const listsReducer = (state = initialState, action) => {
       }
 
       if (droppableIdStart !== droppableIdEnd) {
-        console.log("inside if")
         const listStart = state.find(list => droppableIdStart === list.id);
         const card = listStart.cards.splice(droppableIndexStart, 1);
         const listEnd = state.find(list => droppableIdEnd === list.id);
@@ -97,7 +96,32 @@ const listsReducer = (state = initialState, action) => {
       }
 
       return newState;
-
+    }
+    case CONSTANTS.DELETE_LIST: {
+      const {listID} = action.payload;
+      const newState = state.filter(list => {
+        return list.id !== listID
+      })
+      return newState;
+    }
+    case CONSTANTS.DELETE_CARD: {
+      const {cardId, listId} = action.payload;
+      const list = state.find(item => item.id === listId)
+      const newCards = list.cards.filter(card => {
+        return card.id !== cardId
+      })
+      const newState = state.map(list => {
+        if(list.id === listId) {
+          return {
+            ...list,
+            cards: newCards
+          }
+        } else {
+          return list;
+        }
+      })
+      return newState;
+    }
     default:
       return state;
   }
