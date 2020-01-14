@@ -1,4 +1,6 @@
 import { CONSTANTS } from "../actions";
+import expect from "expect";
+import store from "../store";
 
 let listID = 2;
 let cardID = 6;
@@ -126,5 +128,266 @@ const listsReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+const testAddList = () => {
+  const stateBefore = [
+    {
+        id: 'list-0',
+        title: 'To do',
+        cards: [
+            {id: 'card-0', text: "Take a bath"},
+            {id: 'card-1', text: 'Do drawing'}
+        ]
+    },
+    {
+        id: 'list-1',
+        title: 'Doing',
+        cards: [
+            {
+              id: 'card-3',
+              text: "Coding"
+            },
+            {
+              id: 'card-4',
+              text: "Learning and Implementing"
+            },
+            {
+              id: 'card-5',
+              text: "Listening songs"
+            }
+          ]
+    }
+  ];
+  const action = {
+    type: "ADD_LIST",
+    payload: 'Completed',
+  };
+  const stateAfter = [
+    {
+      id: 'list-0',
+      title: 'To do',
+      cards: [
+          {id: 'card-0', text: "Take a bath"},
+          {id: 'card-1', text: 'Do drawing'}
+      ]
+    },
+    {
+        id: 'list-1',
+        title: 'Doing',
+        cards: [
+            {
+              id: 'card-3',
+              text: "Coding"
+            },
+            {
+              id: 'card-4',
+              text: "Learning and Implementing"
+            },
+            {
+              id: 'card-5',
+              text: "Listening songs"
+            }
+          ]
+    },
+    {
+      id: 'list-2',
+      title: 'Completed',
+      cards: []
+    },
+  ];
+  expect(listsReducer(stateBefore, action)).toEqual(stateAfter);
+}
+
+const testDeleteList = () => {
+  const stateBefore = [
+      {
+          id: 'list-0',
+          title: 'To do',
+          cards: [
+              {id: 'card-0', text: "Take a bath"},
+              {id: 'card-1', text: 'Do drawing'}
+          ]
+      },
+      {
+          id: 'list-1',
+          title: 'Doing',
+          cards: [
+              {
+                id: 'card-3',
+                text: "Coding"
+              },
+              {
+                id: 'card-4',
+                text: "Learning and Implementing"
+              },
+              {
+                id: 'card-5',
+                text: "Listening songs"
+              }
+            ]
+      }
+  ];
+  const action = {
+    type: "DELETE_LIST",
+    payload: {
+      listID: 'list-0',
+    }
+  };
+  const stateAfter = [
+      {
+          id: 'list-1',
+          title: 'Doing',
+          cards: [
+              {
+                id: 'card-3',
+                text: "Coding"
+              },
+              {
+                id: 'card-4',
+                text: "Learning and Implementing"
+              },
+              {
+                id: 'card-5',
+                text: "Listening songs"
+              }
+            ]
+      }
+  ];
+  expect(listsReducer(stateBefore, action)).toEqual(stateAfter);
+};
+
+const testAddCard = () => {
+  const stateBefore = [
+    {
+        id: 'list-0',
+        title: 'To do',
+        cards: [
+            {id: 'card-0', text: "Take a bath"},
+            {id: 'card-1', text: 'Do drawing'}
+        ]
+    },
+    {
+        id: 'list-1',
+        title: 'Doing',
+        cards: [
+            {
+              id: 'card-3',
+              text: "Coding"
+            },
+            {
+              id: 'card-4',
+              text: "Learning and Implementing"
+            },
+            {
+              id: 'card-5',
+              text: "Listening songs"
+            }
+          ]
+    }
+  ];
+  const action = {
+    type: "ADD_CARD",
+    payload: {listID:'list-0', text:'Learn to shade'},
+  };
+  const stateAfter = [
+    {
+      id: 'list-0',
+      title: 'To do',
+      cards: [
+          {id: 'card-0', text: "Take a bath"},
+          {id: 'card-1', text: 'Do drawing'},
+          {id: 'card-6', text: 'Learn to shade'}
+      ]
+    },
+    {
+        id: 'list-1',
+        title: 'Doing',
+        cards: [
+            {
+              id: 'card-3',
+              text: "Coding"
+            },
+            {
+              id: 'card-4',
+              text: "Learning and Implementing"
+            },
+            {
+              id: 'card-5',
+              text: "Listening songs"
+            }
+          ]
+    }
+  ];
+  expect(listsReducer(stateBefore, action)).toEqual(stateAfter);
+}
+
+const testDeleteCard = () => {
+  const stateBefore = [
+      {
+          id: 'list-0',
+          title: 'To do',
+          cards: [
+              {id: 'card-0', text: "Take a bath"},
+              {id: 'card-1', text: 'Do drawing'}
+          ]
+      },
+      {
+          id: 'list-1',
+          title: 'Doing',
+          cards: [
+              {
+                id: 'card-3',
+                text: "Coding"
+              },
+              {
+                id: 'card-4',
+                text: "Learning and Implementing"
+              },
+              {
+                id: 'card-5',
+                text: "Listening songs"
+              }
+            ]
+      }
+  ];
+  const action = {
+    type: "DELETE_CARD",
+    payload: {
+      cardId: 'card-5',
+      listId: 'list-1',
+    }
+  };
+  const stateAfter = [
+    {
+        id: 'list-0',
+        title: 'To do',
+        cards: [
+            {id: 'card-0', text: "Take a bath"},
+            {id: 'card-1', text: 'Do drawing'}
+        ]
+    },
+    {
+        id: 'list-1',
+        title: 'Doing',
+        cards: [
+            {
+              id: 'card-3',
+              text: "Coding"
+            },
+            {
+              id: 'card-4',
+              text: "Learning and Implementing"
+            }
+          ]
+    }
+];
+  expect(listsReducer(stateBefore, action)).toEqual(stateAfter);
+};
+
+testAddCard();
+testDeleteCard();
+testAddList();
+testDeleteList();
+console.log("all tests are passed");
 
 export default listsReducer;

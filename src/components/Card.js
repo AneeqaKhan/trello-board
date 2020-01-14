@@ -2,11 +2,14 @@ import React from "react";
 import "./app.css";
 import { Draggable } from "react-beautiful-dnd";
 import Icon from "@material-ui/core/Icon";
-import { deleteCard } from "../actions";
+import { deleteCard, editCard } from "../actions";
 
 const Card = ({ text, cardId, index, dispatch, listId }) => {
   const handleDeleteCard = () => {
     dispatch(deleteCard(cardId, listId));
+  }
+  const handleEditCard = () => {
+    
   }
   return (
     <Draggable draggableId={String(cardId)} index={index}>
@@ -18,8 +21,9 @@ const Card = ({ text, cardId, index, dispatch, listId }) => {
           {...provided.dragHandleProps}
         >
           <p>{text}</p>
-          <div className="list-delete-button-container" onClick={handleDeleteCard}>
-            <Icon>delete</Icon>
+          <div className="list-action-button-container">
+            <div onClick={handleEditCard}><Icon className="action-icon">edit</Icon></div>
+            <div onClick={handleDeleteCard}><Icon className="action-icon">delete</Icon></div>
           </div>
         </div>
       )}
